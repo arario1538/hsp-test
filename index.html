@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSP 테스트</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Chart.js CDN 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,7 +16,12 @@
             <button id="start-btn">테스트 시작</button>
         </div>
         <div id="test-container" class="section"></div>
-        <div id="result" class="section"></div>
+
+        <!-- 그래프가 그려질 캔버스 -->
+        <div id="result" class="section">
+            <h2>테스트 결과</h2>
+            <canvas id="myChart"></canvas> <!-- Chart.js 캔버스 -->
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
