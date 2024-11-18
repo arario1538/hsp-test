@@ -122,3 +122,16 @@ button:hover {
     margin-bottom: 20px;
 }
 
+.ads {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.left-ad {
+    left: 10px;
+}
+.right-ad {
+    right: 10px;
+}
+
+
