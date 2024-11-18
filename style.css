@@ -172,31 +172,46 @@ button:hover {
     background-color: #f9f9f9; /* 배경색으로 영역 확인 */
 }
 
-/* 푸터에 버튼 추가 */
+/* 푸터에 버튼 추가 - 화면 너비에 따라 배열을 변경 */
 
-/* Footer buttons styling */
+/* Footer buttons container */
 #footer-buttons {
     margin-top: 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap; /* 줄 바꿈 허용 */
+    justify-content: center;
+    gap: 10px; /* 버튼 간격 */
 }
 
+/* Footer buttons styling */
 .footer-btn {
     display: inline-block;
     text-align: center;
     padding: 10px 20px;
-    margin: 10px 0;
     font-size: 16px;
     color: white;
     background-color: #4CAF50; /* 버튼 배경색 */
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
-    width: 200px; /* 버튼 너비 */
+    min-width: 150px; /* 버튼 최소 너비 */
+    flex: 1 1 auto; /* 화면 너비에 따라 버튼 크기 조정 */
+    max-width: 200px; /* 버튼 최대 너비 */
 }
 
 .footer-btn:hover {
     background-color: #45a049; /* 호버 효과 */
 }
+
+/* 미디어 쿼리: 모바일에서는 세로 배열 */
+@media (max-width: 600px) {
+    #footer-buttons {
+        flex-direction: column; /* 버튼을 위아래로 배열 */
+    }
+
+    .footer-btn {
+        max-width: 100%; /* 모바일에서는 버튼이 화면 너비에 맞게 */
+    }
+}
+
 
