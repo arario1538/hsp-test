@@ -12,10 +12,11 @@ body {
 }
 
 .container {
-    max-width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
+    position: relative; /* 광고 배치를 위한 상대적 위치 설정 */
 }
-
 
 h1 {
     font-size: 24px;
@@ -111,9 +112,13 @@ button:hover {
     padding: 20px;
 }
 
-.container {
+.content {
     flex: 1;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #sidebar-top-ad, #sidebar-bottom-ad {
@@ -122,27 +127,17 @@ button:hover {
     margin-bottom: 20px;
 }
 
+/* 광고 배치 */
 .ads {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
+
 .left-ad {
     left: 10px;
 }
+
 .right-ad {
     right: 10px;
 }
-
-.content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.ads {
-    margin: 20px;
-}
-
-
