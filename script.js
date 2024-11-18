@@ -182,7 +182,6 @@ function generateOverallAnalysis(scores) {
         analysis += '당신의 강점인 안정성과 적응력을 잘 활용하세요. 동시에 주변 사람들의 감정이나 미묘한 상황 변화에 조금 더 주의를 기울이는 연습을 하면, 더욱 풍부한 대인 관계와 경험을 쌓을 수 있을 것입니다.';
     }
     analysis += '</p>';
-
     return analysis;
 }
 
