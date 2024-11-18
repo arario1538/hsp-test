@@ -35,9 +35,6 @@ function showSection(id) {
 function createQuestion() {
     const testContainer = document.getElementById('test-container');
     testContainer.innerHTML = `
-        <div class="progress-bar">
-            <span class="progress" style="width: ${(currentQuestion / questions.length) * 100}%"></span>
-        </div>
         <div class="question">
             <p>${currentQuestion + 1}. ${questions[currentQuestion]}</p>
             <div class="options">
@@ -71,21 +68,43 @@ function nextQuestion() {
 }
 
 function showResult() {
-    const score = answers.reduce((sum, answer) => sum + answer, 0);
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = `
-        <h2>테스트 결과</h2>
-        <p>당신의 점수: ${score}점</p>
-        <p>${score >= 56 ? 'HSP 성향이 높습니다.' : 'HSP 성향이 낮습니다.'}</p>
-        <button id="restart-btn">다시 시작</button>
-    `;
-    showSection('result');
-
-    document.getElementById('restart-btn').addEventListener('click', () => {
-        currentQuestion = 0;
-        answers = [];
-        showSection('intro');
+    const scores = calculateScores();
+    
+    // Chart.js로 그래프 그리기
+    const ctx = document.getElementById('myChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['감각적 민감성', '정서적 반응성', '인지적 처리 깊이'],
+            datasets: [{
+                label: 'HSP 점수',
+                data: [scores.sensory_sensitivity, scores.emotional_reactivity, scores.cognitive_depth],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
     });
+
+    showSection('result');
+}
+
+// 각 영역별 점수 계산 (예시로 임의로 나눔)
+function calculateScores() {
+    return {
+        sensory_sensitivity: answers.slice(0, 2).reduce((a, b) => a + b, 0),
+        emotional_reactivity: answers.slice(2, 4).reduce((a, b) => a + b, 0),
+        cognitive_depth: answers.slice(4).reduce((a, b) => a + b, 0)
+    };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
