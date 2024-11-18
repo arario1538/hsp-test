@@ -53,6 +53,7 @@ function createQuestion() {
 }
 
 
+
 function nextQuestion() {
     const selected = document.querySelector('input[name="q"]:checked');
     if (!selected) {
