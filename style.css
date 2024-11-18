@@ -12,9 +12,11 @@ body {
 }
 
 .container {
-    max-width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
     padding: 20px;
 }
+
 
 h1 {
     font-size: 24px;
