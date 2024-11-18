@@ -134,4 +134,15 @@ button:hover {
     right: 10px;
 }
 
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ads {
+    margin: 20px;
+}
+
 
