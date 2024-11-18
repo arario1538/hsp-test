@@ -49,8 +49,9 @@ function createQuestion() {
         <button id="next-btn">${currentQuestion === questions.length - 1 ? '결과 보기' : '다음'}</button>
     `;
 
-    document.getElementById('next-btn').addEventListener('click', nextQuestion);
+    document.getElementById('next-btn').onclick = nextQuestion;
 }
+
 
 function nextQuestion() {
     const selected = document.querySelector('input[name="q"]:checked');
