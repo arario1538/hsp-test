@@ -51,7 +51,12 @@ function showSection(id) {
 
 
 function createQuestion() {
+    console.log("Creating question:", currentQuestion, questions[currentQuestion]);
     const testContainer = document.getElementById('test-container');
+    if (!testContainer) {
+        console.error("Test container not found.");
+        return;
+    }
     testContainer.innerHTML = `
         <div class="question">
             <p>${currentQuestion + 1}. ${questions[currentQuestion].text}</p>
@@ -65,9 +70,17 @@ function createQuestion() {
         </div>
         <button id="next-btn">${currentQuestion === questions.length - 1 ? '결과 보기' : '다음'}</button>
     `;
+    console.log("Test container updated");
 
-    document.getElementById('next-btn').onclick = nextQuestion;
+    const nextBtn = document.getElementById('next-btn');
+    if (nextBtn) {
+        nextBtn.onclick = nextQuestion;
+        console.log("Next button initialized");
+    } else {
+        console.error("Next button not found.");
+    }
 }
+
 
 function nextQuestion() {
     const selected = document.querySelector('input[name="q"]:checked');
