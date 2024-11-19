@@ -1,27 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSP 테스트</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .section { display: none; }
-        .section.active { display: block; }
-    </style>
-</head>
-<body>
-    <div id="start-container" class="section active">
-        <button id="start-btn">테스트 시작</button>
-    </div>
-    <div id="test-container" class="section"></div>
-    <div id="result" class="section">
-        <canvas id="myChart"></canvas>
-        <div id="analysis"></div>
-    </div>
-
-    <script>
-        // script.js
+// script.js
 
         const questions = [
             { text: "주변 사람들의 표정이나 말투 변화에 민감하게 반응한다.", category: "sensory_sensitivity" },
@@ -219,6 +196,3 @@
                 createQuestion();
             });
         });
-    </script>
-</body>
-</html>
