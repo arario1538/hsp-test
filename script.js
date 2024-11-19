@@ -164,7 +164,72 @@ function generateAnalysis(scores) {
 }
 
 function generateCategoryAnalysis(category, score) {
-    let analysis = `<p><strong>${category}:</strong> ${score}/35점 - `;
+    let maxScore;
+    let highThreshold;
+    let midThreshold;
+
+    switch (category) {
+        case '감각적 민감성':
+            maxScore = 45;
+            highThreshold = 30;
+            midThreshold = 20;
+            break;
+        case '정서적 반응성':
+            maxScore = 35;
+            highThreshold = 24;
+            midThreshold = 15;
+            break;
+        case '인지적 처리 깊이':
+            maxScore = 20;
+            highThreshold = 15;
+            midThreshold = 10;
+            break;
+    }
+
+    let analysis = `<p><strong>${category}:</strong> ${score}/${maxScore}점 - `;
+    if (score >= highThreshold) {
+        analysis += '✨ 아주 높은 점수입니다! ';
+        switch (category) {
+            case '감각적 민감성':
+                analysis += '소리, 빛 등 주변 자극에 매우 민감하게 반응합니다. 이러한 민감성은 창의력과 직관력을 높이는 데 도움이 되지만, 과도한 자극은 스트레스를 초래할 수 있습니다. 조용한 환경을 만들고 충분한 휴식을 취하는 것이 중요합니다.';
+                break;
+            case '정서적 반응성':
+                analysis += '타인의 감정에 매우 잘 공감하며, 상황에 대한 감정적 반응이 강합니다. 이는 대인관계에서 좋은 장점이 될 수 있지만, 과도한 공감은 피로를 유발할 수 있습니다. 자신을 돌보는 시간을 확보하는 것이 필요합니다.';
+                break;
+            case '인지적 처리 깊이':
+                analysis += '정보를 깊이 있게 처리하며, 세부사항을 꼼꼼히 분석하는 성향이 강합니다. 이러한 능력은 문제 해결과 창의적 사고에 유리하지만, 지나친 고민은 스트레스를 초래할 수 있습니다. 때때로 생각을 멈추고 휴식을 취하는 것도 도움이 됩니다.';
+                break;
+        }
+    } else if (score >= midThreshold) {
+        analysis += '😊 중간 정도의 점수입니다. ';
+        switch (category) {
+            case '감각적 민감성':
+                analysis += '주변 자극에 어느 정도 민감하며, 필요한 경우 자극을 조절하려는 성향이 있습니다. 조용한 환경에서 휴식을 취하거나, 자극적인 상황을 피하는 것이 도움이 될 수 있습니다.';
+                break;
+            case '정서적 반응성':
+                analysis += '타인의 감정을 잘 이해하며, 상황에 따라 적절히 반응하는 균형 잡힌 성향을 가지고 있습니다. 대인 관계에서 감정적으로 지치지 않도록 자기 돌봄을 실천하는 것이 좋습니다.';
+                break;
+            case '인지적 처리 깊이':
+                analysis += '상황을 잘 분석하고 신중하게 생각하는 경향이 있습니다. 이 점수는 복잡한 문제 해결에 도움이 되며, 때로는 직관에 따라 빠르게 결정을 내리는 연습도 필요합니다.';
+                break;
+        }
+    } else {
+        analysis += '😌 낮은 점수입니다. ';
+        switch (category) {
+            case '감각적 민감성':
+                analysis += '주변 자극에 비교적 둔감하며, 다양한 환경에서도 스트레스를 덜 받는 편입니다. 이는 안정감을 유지하는 데 도움이 되지만, 가끔은 자신에게 필요한 편안한 환경을 만들어 주는 것도 중요합니다.';
+                break;
+            case '정서적 반응성':
+                analysis += '타인의 감정에 크게 영향을 받지 않으며, 감정적으로 안정된 상태를 유지하는 편입니다. 그러나 가끔은 주변 사람들의 감정에 관심을 기울이는 연습도 필요할 수 있습니다.';
+                break;
+            case '인지적 처리 깊이':
+                analysis += '빠르게 결정을 내리고 실용적인 접근을 선호합니다. 이는 효율적이지만, 중요한 상황에서는 조금 더 깊이 생각하는 연습도 도움이 될 수 있습니다.';
+                break;
+        }
+    }
+    analysis += '</p>';
+    return analysis;
+}:</strong> ${score}/35점 - `;
     if (score > 20) {
         analysis += '✨ 아주 높은 점수입니다! ';
         switch (category) {
