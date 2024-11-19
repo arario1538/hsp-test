@@ -38,16 +38,17 @@ let currentQuestion = 0;
 let answers = [];
 
 function showSection(id) {
-    console.log("Activating section:", id);
-    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+    console.log(`Activating section: ${id}`);
     const sectionToShow = document.getElementById(id);
-    console.log("Section to show:", sectionToShow);
-    if (sectionToShow) {
-        sectionToShow.classList.add('active');
-    } else {
+    if (!sectionToShow) {
         console.error(`Section with ID "${id}" not found.`);
+        return;
     }
+    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+    sectionToShow.classList.add('active');
+    console.log(`Section "${id}" is now active.`);
 }
+
 
 
 function createQuestion() {
