@@ -130,13 +130,14 @@ function showResult() {
 }
 
 function calculateScores() {
-    // 각 카테고리 점수를 0으로 초기화합니다.
+    // 카테고리별 점수를 초기화
     const scores = {
         sensory_sensitivity: 0,
         emotional_reactivity: 0,
         cognitive_depth: 0
     };
 
+    // 답변을 기반으로 점수를 계산
     answers.forEach(answer => {
         scores[answer.category] += answer.value;
     });
@@ -144,13 +145,14 @@ function calculateScores() {
     return scores;
 }
 
+
 function generateAnalysis(scores) {
     let analysis = '<h3>분석 결과</h3>';
     
     // 각 영역별 분석
-    analysis += generateCategoryAnalysis('감각적 민감성', scores.sensory_sensitivity);
-    analysis += generateCategoryAnalysis('정서적 반응성', scores.emotional_reactivity);
-    analysis += generateCategoryAnalysis('인지적 처리 깊이', scores.cognitive_depth);
+    analysis += generateCategoryAnalysis('감각적 민감성', scores.sensory_sensitivity, 32);
+    analysis += generateCategoryAnalysis('정서적 반응성', scores.emotional_reactivity, 32);
+    analysis += generateCategoryAnalysis('인지적 처리 깊이', scores.cognitive_depth, 16);
 
     // 종합 분석 추가
     analysis += generateOverallAnalysis(scores);
@@ -158,9 +160,10 @@ function generateAnalysis(scores) {
     return analysis;
 }
 
-function generateCategoryAnalysis(category, score) {
-    let analysis = `<p><strong>${category}:</strong> ${score}/28점 - `;
-    if (score > 20) {
+
+function generateCategoryAnalysis(category, score, maxScore) {
+    let analysis = `<p><strong>${category}:</strong> ${score}/${maxScore}점 - `;
+    if (score > maxScore * 0.8) { // 상위 20% 기준
         analysis += '✨ 아주 높은 점수입니다! ';
         switch (category) {
             case '감각적 민감성':
@@ -173,7 +176,7 @@ function generateCategoryAnalysis(category, score) {
                 analysis += '정보를 깊이 있게 처리하며, 세부사항을 꼼꼼히 분석하는 성향이 강합니다. 이러한 능력은 문제 해결과 창의적 사고에 유리하지만, 지나친 고민은 스트레스를 초래할 수 있습니다. 때때로 생각을 멈추고 휴식을 취하는 것도 도움이 됩니다.';
                 break;
         }
-    } else if (score > 14) {
+    } else if (score > maxScore * 0.5) { // 중간 점수
         analysis += '😊 중간 정도의 점수입니다. ';
         switch (category) {
             case '감각적 민감성':
@@ -206,12 +209,13 @@ function generateCategoryAnalysis(category, score) {
 
 function generateOverallAnalysis(scores) {
     const totalScore = scores.sensory_sensitivity + scores.emotional_reactivity + scores.cognitive_depth;
+    const maxScore = 80; // 총점
     let analysis = '<h3>전체 분석 🌟</h3>';
-    analysis += `<p>총점: ${totalScore}/60점</p>`;
+    analysis += `<p>총점: ${totalScore}/${maxScore}점</p>`;
 
-    if (totalScore > 45) {
+    if (totalScore > maxScore * 0.8) {
         analysis += '<p>🌈 당신은 주변 환경과 다른 사람의 감정에 아주 민감한 편이에요. 이런 민감함은 창의적이고 세심한 장점이 될 수 있어요. 하지만 자극이 너무 많으면 스트레스를 받을 수 있으니, 스스로를 돌보는 시간이 꼭 필요해요.</p>';
-    } else if (totalScore > 30) {
+    } else if (totalScore > maxScore * 0.5) {
         analysis += '<p>⚖️ 당신은 민감함과 균형을 잘 유지하는 편이에요. 상황에 따라 민감하게 반응하거나 여유롭게 대처할 수 있어요. 이런 균형 잡힌 성격은 여러 상황에서 큰 도움이 돼요.</p>';
     } else {
         analysis += '<p>💪 당신은 대부분의 환경에 잘 적응하고 스트레스를 덜 받는 편이에요. 이런 안정적인 성격은 여러 상황에서 강점이 될 수 있어요. 하지만 가끔은 주변 사람의 감정이나 작은 상황 변화에 조금 더 신경 써보세요.</p>';
