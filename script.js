@@ -106,59 +106,97 @@ function nextQuestion() {
 }
 
 function showResult() {
+    // 점수 계산
     const scores = calculateScores();
-    
+    console.log("Scores calculated:", scores); // 디버깅 출력
+
+    // Chart.js 로드 확인
+    if (typeof Chart === 'undefined') {
+        console.error("Chart.js is not loaded. Ensure the script is included.");
+        return;
+    }
+
+    // myChart 요소 확인
+    const ctx = document.getElementById('myChart');
+    if (!ctx) {
+        console.error("'myChart' element not found. Ensure the canvas element exists.");
+        return;
+    }
+
+    const chartContext = ctx.getContext('2d');
+    if (!chartContext) {
+        console.error("Unable to get '2d' context from 'myChart'.");
+        return;
+    }
+
     // Chart.js로 그래프 그리기
-    const ctx = document.getElementById('myChart').getContext('2d');
-    
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['감각적 민감성', '정서적 반응성', '인지적 처리 깊이'],
-            datasets: [{
-                label: 'HSP 점수',
-                data: [scores.sensory_sensitivity, scores.emotional_reactivity, scores.cognitive_depth],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.dataset.label}: ${context.raw}점`;
+    try {
+        new Chart(chartContext, {
+            type: 'bar',
+            data: {
+                labels: ['감각적 민감성', '정서적 반응성', '인지적 처리 깊이'],
+                datasets: [{
+                    label: 'HSP 점수',
+                    data: [scores.sensory_sensitivity, scores.emotional_reactivity, scores.cognitive_depth],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.raw}점`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 45, // 최대 점수 설정
+                        title: {
+                            display: true,
+                            text: '점수'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '카테고리'
                         }
                     }
                 }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 45, // 최대 점수 설정
-                    title: {
-                        display: true,
-                        text: '점수'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: '카테고리'
-                    }
-                }
             }
-        }
-    });
+        });
+        console.log("Chart successfully rendered.");
+    } catch (error) {
+        console.error("Error while rendering chart:", error);
+        return;
+    }
 
     // 텍스트 분석 결과 추가
     const analysisDiv = document.getElementById('analysis');
-    analysisDiv.innerHTML = generateAnalysis(scores);
+    if (!analysisDiv) {
+        console.error("'analysis' element not found. Ensure the HTML structure is correct.");
+        return;
+    }
 
+    try {
+        analysisDiv.innerHTML = generateAnalysis(scores);
+        console.log("Analysis generated successfully.");
+    } catch (error) {
+        console.error("Error while generating analysis:", error);
+    }
+
+    // 결과 섹션 표시
     showSection('result');
+    console.log("Result section is now active.");
 }
+
 
 function calculateScores() {
     // 각 카테고리 점수를 0으로 초기화합니다.
