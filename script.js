@@ -18,14 +18,21 @@ const questions = [
     { text: "주변 사람이 힘들어 보일 때 자연스럽게 도움을 주고 싶어진다.", category: "emotional_reactivity" },
     { text: "폭력적이거나 자극적인 영상은 의도적으로 피하려고 한다.", category: "emotional_reactivity" },
     { text: "업무나 발표 중 누군가가 평가하고 있다는 생각이 들면 긴장한다.", category: "emotional_reactivity" },
-
     { text: "여러 가지 일을 한꺼번에 처리하면 스트레스를 크게 받는다.", category: "cognitive_depth" },
     { text: "실수를 줄이기 위해 항상 꼼꼼하게 확인하려 한다.", category: "cognitive_depth" },
     { text: "음악을 들으며 깊은 감동을 느끼고, 이를 오래 기억한다.", category: "cognitive_depth" },
     { text: "새로운 아이디어나 문제를 깊이 있게 분석하려는 성향이 있다.", category: "cognitive_depth" }
 ];
 
-questions.sort(() => Math.random() - 0.5);
+// Fisher-Yates 알고리즘을 사용하여 질문을 무작위로 섞습니다.
+function shuffleQuestions(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+shuffleQuestions(questions);
 
 let currentQuestion = 0;
 let answers = [];
@@ -61,12 +68,7 @@ function nextQuestion() {
         return;
     }
 
-    const value = parseInt(selected.value);
-    if (value < 1 || value > 5) {
-        alert('잘못된 값이 선택되었습니다. 다시 선택해주세요.');
-        return;
-    }
-
+    const value = parseInt(selected.value, 10);
     answers.push({ value: value, category: questions[currentQuestion].category });
 
     if (currentQuestion < questions.length - 1) {
@@ -162,7 +164,7 @@ function generateAnalysis(scores) {
 }
 
 function generateCategoryAnalysis(category, score) {
-    let analysis = `<p><strong>${category}:</strong> ${score}/28점 - `;
+    let analysis = `<p><strong>${category}:</strong> ${score}/35점 - `;
     if (score > 20) {
         analysis += '✨ 아주 높은 점수입니다! ';
         switch (category) {
@@ -210,11 +212,11 @@ function generateCategoryAnalysis(category, score) {
 function generateOverallAnalysis(scores) {
     const totalScore = scores.sensory_sensitivity + scores.emotional_reactivity + scores.cognitive_depth;
     let analysis = '<h3>전체 분석 🌟</h3>';
-    analysis += `<p>총점: ${totalScore}/60점</p>`;
+    analysis += `<p>총점: ${totalScore}/100점 (각 문항 최대 5점 기준)</p>`;
 
-    if (totalScore > 45) {
+    if (totalScore > 75) {
         analysis += '<p>🌈 당신은 주변 환경과 다른 사람의 감정에 아주 민감한 편이에요. 이런 민감함은 창의적이고 세심한 장점이 될 수 있어요. 하지만 자극이 너무 많으면 스트레스를 받을 수 있으니, 스스로를 돌보는 시간이 꼭 필요해요.</p>';
-    } else if (totalScore > 30) {
+    } else if (totalScore > 50) {
         analysis += '<p>⚖️ 당신은 민감함과 균형을 잘 유지하는 편이에요. 상황에 따라 민감하게 반응하거나 여유롭게 대처할 수 있어요. 이런 균형 잡힌 성격은 여러 상황에서 큰 도움이 돼요.</p>';
     } else {
         analysis += '<p>💪 당신은 대부분의 환경에 잘 적응하고 스트레스를 덜 받는 편이에요. 이런 안정적인 성격은 여러 상황에서 강점이 될 수 있어요. 하지만 가끔은 주변 사람의 감정이나 작은 상황 변화에 조금 더 신경 써보세요.</p>';
