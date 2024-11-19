@@ -38,9 +38,17 @@ let currentQuestion = 0;
 let answers = [];
 
 function showSection(id) {
+    console.log("Activating section:", id);
     document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
+    const sectionToShow = document.getElementById(id);
+    console.log("Section to show:", sectionToShow);
+    if (sectionToShow) {
+        sectionToShow.classList.add('active');
+    } else {
+        console.error(`Section with ID "${id}" not found.`);
+    }
 }
+
 
 function createQuestion() {
     const testContainer = document.getElementById('test-container');
