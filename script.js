@@ -4,64 +4,37 @@ const questions = [
     { text: "주변 사람들의 표정이나 말투 변화에 민감하게 반응한다.", category: "sensory_sensitivity" },
     { text: "대중교통이나 복잡한 환경의 소음에 쉽게 피로감을 느낀다.", category: "sensory_sensitivity" },
     { text: "네온사인, 전광판처럼 강한 빛에 노출되면 눈이 금방 피로해진다", category: "sensory_sensitivity" },
-    { text: "배달 음식을 주문할 때 포장 상태나 재료의 신선도를 민감하게 따진다.", category: "sensory_sensitivity" },
-    { text: "카페나 공공장소에서 주변이 시끄러우면 집중하기 힘들다.", category: "sensory_sensitivity" },
-    { text: "조용한 환경에서 더 잘 집중할 수 있다.", category: "sensory_sensitivity" },
-    { text: "복잡한 쇼핑몰이나 사람이 붐비는 장소에서는 금방 피로감을 느낀다.", category: "sensory_sensitivity" },
-    { text: "지나치게 매운 음식이나 강한 자극이 부담스럽게 느껴질 때가 있다.", category: "sensory_sensitivity" },
-    { text: "날씨가 극단적으로 덥거나 추울 때 쉽게 지친다.", category: "sensory_sensitivity" },
-  
     { text: "예의 없는 행동을 보면 쉽게 불편함을 느낀다.", category: "emotional_reactivity" },
+    { text: "배달 음식을 주문할 때 포장 상태나 재료의 신선도를 민감하게 따진다.", category: "sensory_sensitivity" },
     { text: "갑작스러운 전화나 메시지에 긴장하거나 불편함을 느낄 때가 있다.", category: "emotional_reactivity" },
+    { text: "카페나 공공장소에서 주변이 시끄러우면 집중하기 힘들다.", category: "sensory_sensitivity" },
     { text: "사람이 많은 명절이나 회식 자리에서는 쉽게 지친다.", category: "emotional_reactivity" },
     { text: "중요한 일을 준비할 때 계획대로 되지 않으면 불안감을 느낀다.", category: "emotional_reactivity" },
+    { text: "여러 가지 일을 한꺼번에 처리하면 스트레스를 크게 받는다.", category: "cognitive_depth" },
     { text: "주변 사람이 힘들어 보일 때 자연스럽게 도움을 주고 싶어진다.", category: "emotional_reactivity" },
     { text: "폭력적이거나 자극적인 영상은 의도적으로 피하려고 한다.", category: "emotional_reactivity" },
     { text: "업무나 발표 중 누군가가 평가하고 있다는 생각이 들면 긴장한다.", category: "emotional_reactivity" },
-    { text: "여러 가지 일을 한꺼번에 처리하면 스트레스를 크게 받는다.", category: "cognitive_depth" },
+    { text: "조용한 환경에서 더 잘 집중할 수 있다.", category: "sensory_sensitivity" },
+    { text: "가족이나 친구와의 만남 후에는 혼자만의 시간이 필요하다.", category: "emotional_reactivity" },
+    { text: "복잡한 쇼핑몰이나 사람이 붐비는 장소에서는 금방 피로감을 느낀다.", category: "sensory_sensitivity" },
+    { text: "지나치게 매운 음식이나 강한 자극이 부담스럽게 느껴질 때가 있다.", category: "sensory_sensitivity" },
+    { text: "날씨가 극단적으로 덥거나 추울 때 쉽게 지친다.", category: "sensory_sensitivity" },
     { text: "실수를 줄이기 위해 항상 꼼꼼하게 확인하려 한다.", category: "cognitive_depth" },
-    { text: "음악을 들으며 깊은 감동을 느끼고, 이를 오래 기억한다.", category: "cognitive_depth" },
-    { text: "새로운 아이디어나 문제를 깊이 있게 분석하려는 성향이 있다.", category: "cognitive_depth" }
+    { text: "음악을 들으며 깊은 감동을 느끼고, 이를 오래 기억한다.", category: "cognitive_depth" }
 ];
 
-// Fisher-Yates 알고리즘을 사용하여 질문을 무작위로 섞습니다.
-function shuffleQuestions(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-shuffleQuestions(questions);
+questions.sort(() => Math.random() - 0.5);
 
 let currentQuestion = 0;
 let answers = [];
 
 function showSection(id) {
-    console.log(`Activating section: ${id}`);
-    const sectionToShow = document.getElementById(id);
-    if (!sectionToShow) {
-        console.error(`Section with ID "${id}" not found.`);
-        return;
-    }
     document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-    sectionToShow.classList.add('active');
-    console.log(`Section "${id}" is now active.`);
+    document.getElementById(id).classList.add('active');
 }
 
-
-
 function createQuestion() {
-    console.log("Creating question for index:", currentQuestion);
     const testContainer = document.getElementById('test-container');
-    if (!testContainer) {
-        console.error("Test container not found.");
-        return;
-    }
-    if (!questions[currentQuestion]) {
-        console.error(`Question at index ${currentQuestion} does not exist.`);
-        return;
-    }
     testContainer.innerHTML = `
         <div class="question">
             <p>${currentQuestion + 1}. ${questions[currentQuestion].text}</p>
@@ -70,22 +43,13 @@ function createQuestion() {
                 <label><input type="radio" name="q" value="2"> 약간 그렇다</label>
                 <label><input type="radio" name="q" value="3"> 꽤 그렇다</label>
                 <label><input type="radio" name="q" value="4"> 매우 그렇다</label>
-                <label><input type="radio" name="q" value="5"> 완전히 그렇다</label>
             </div>
         </div>
         <button id="next-btn">${currentQuestion === questions.length - 1 ? '결과 보기' : '다음'}</button>
     `;
-    console.log("Question rendered in container.");
-    const nextBtn = document.getElementById('next-btn');
-    if (nextBtn) {
-        nextBtn.onclick = nextQuestion;
-        console.log("Next button initialized.");
-    } else {
-        console.error("Next button not found.");
-    }
+
+    document.getElementById('next-btn').onclick = nextQuestion;
 }
-
-
 
 function nextQuestion() {
     const selected = document.querySelector('input[name="q"]:checked');
@@ -94,7 +58,12 @@ function nextQuestion() {
         return;
     }
 
-    const value = parseInt(selected.value, 10);
+    const value = parseInt(selected.value);
+    if (value < 1 || value > 4) {
+        alert('잘못된 값이 선택되었습니다. 다시 선택해주세요.');
+        return;
+    }
+
     answers.push({ value: value, category: questions[currentQuestion].category });
 
     if (currentQuestion < questions.length - 1) {
@@ -106,97 +75,59 @@ function nextQuestion() {
 }
 
 function showResult() {
-    // 점수 계산
     const scores = calculateScores();
-    console.log("Scores calculated:", scores); // 디버깅 출력
-
-    // Chart.js 로드 확인
-    if (typeof Chart === 'undefined') {
-        console.error("Chart.js is not loaded. Ensure the script is included.");
-        return;
-    }
-
-    // myChart 요소 확인
-    const ctx = document.getElementById('myChart');
-    if (!ctx) {
-        console.error("'myChart' element not found. Ensure the canvas element exists.");
-        return;
-    }
-
-    const chartContext = ctx.getContext('2d');
-    if (!chartContext) {
-        console.error("Unable to get '2d' context from 'myChart'.");
-        return;
-    }
-
+    
     // Chart.js로 그래프 그리기
-    try {
-        new Chart(chartContext, {
-            type: 'bar',
-            data: {
-                labels: ['감각적 민감성', '정서적 반응성', '인지적 처리 깊이'],
-                datasets: [{
-                    label: 'HSP 점수',
-                    data: [scores.sensory_sensitivity, scores.emotional_reactivity, scores.cognitive_depth],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label}: ${context.raw}점`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 45, // 최대 점수 설정
-                        title: {
-                            display: true,
-                            text: '점수'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: '카테고리'
+    const ctx = document.getElementById('myChart').getContext('2d');
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['감각적 민감성', '정서적 반응성', '인지적 처리 깊이'],
+            datasets: [{
+                label: 'High Sensitivity Personal 점수',
+                data: [scores.sensory_sensitivity, scores.emotional_reactivity, scores.cognitive_depth],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.dataset.label}: ${context.raw}점`;
                         }
                     }
                 }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 32, // 최대 점수 설정
+                    title: {
+                        display: true,
+                        text: '점수'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: '카테고리'
+                    }
+                }
             }
-        });
-        console.log("Chart successfully rendered.");
-    } catch (error) {
-        console.error("Error while rendering chart:", error);
-        return;
-    }
+        }
+    });
 
     // 텍스트 분석 결과 추가
     const analysisDiv = document.getElementById('analysis');
-    if (!analysisDiv) {
-        console.error("'analysis' element not found. Ensure the HTML structure is correct.");
-        return;
-    }
+    analysisDiv.innerHTML = generateAnalysis(scores);
 
-    try {
-        analysisDiv.innerHTML = generateAnalysis(scores);
-        console.log("Analysis generated successfully.");
-    } catch (error) {
-        console.error("Error while generating analysis:", error);
-    }
-
-    // 결과 섹션 표시
     showSection('result');
-    console.log("Result section is now active.");
 }
-
 
 function calculateScores() {
     // 각 카테고리 점수를 0으로 초기화합니다.
@@ -228,30 +159,8 @@ function generateAnalysis(scores) {
 }
 
 function generateCategoryAnalysis(category, score) {
-    let maxScore;
-    let highThreshold;
-    let midThreshold;
-
-    switch (category) {
-        case '감각적 민감성':
-            maxScore = 45;
-            highThreshold = 30;
-            midThreshold = 20;
-            break;
-        case '정서적 반응성':
-            maxScore = 35;
-            highThreshold = 24;
-            midThreshold = 15;
-            break;
-        case '인지적 처리 깊이':
-            maxScore = 20;
-            highThreshold = 15;
-            midThreshold = 10;
-            break;
-    }
-
-    let analysis = `<p><strong>${category}:</strong> ${score}/${maxScore}점 - `;
-    if (score >= highThreshold) {
+    let analysis = `<p><strong>${category}:</strong> ${score}/28점 - `;
+    if (score > 20) {
         analysis += '✨ 아주 높은 점수입니다! ';
         switch (category) {
             case '감각적 민감성':
@@ -264,7 +173,7 @@ function generateCategoryAnalysis(category, score) {
                 analysis += '정보를 깊이 있게 처리하며, 세부사항을 꼼꼼히 분석하는 성향이 강합니다. 이러한 능력은 문제 해결과 창의적 사고에 유리하지만, 지나친 고민은 스트레스를 초래할 수 있습니다. 때때로 생각을 멈추고 휴식을 취하는 것도 도움이 됩니다.';
                 break;
         }
-    } else if (score >= midThreshold) {
+    } else if (score > 14) {
         analysis += '😊 중간 정도의 점수입니다. ';
         switch (category) {
             case '감각적 민감성':
@@ -291,20 +200,18 @@ function generateCategoryAnalysis(category, score) {
                 break;
         }
     }
-}
-analysis += '</p>';
-return analysis;
-
+    analysis += '</p>';
+    return analysis;
 }
 
 function generateOverallAnalysis(scores) {
     const totalScore = scores.sensory_sensitivity + scores.emotional_reactivity + scores.cognitive_depth;
     let analysis = '<h3>전체 분석 🌟</h3>';
-    analysis += `<p>총점: ${totalScore}/100점 (각 문항 최대 5점 기준)</p>`;
+    analysis += `<p>총점: ${totalScore}/60점</p>`;
 
-    if (totalScore > 75) {
+    if (totalScore > 45) {
         analysis += '<p>🌈 당신은 주변 환경과 다른 사람의 감정에 아주 민감한 편이에요. 이런 민감함은 창의적이고 세심한 장점이 될 수 있어요. 하지만 자극이 너무 많으면 스트레스를 받을 수 있으니, 스스로를 돌보는 시간이 꼭 필요해요.</p>';
-    } else if (totalScore > 50) {
+    } else if (totalScore > 30) {
         analysis += '<p>⚖️ 당신은 민감함과 균형을 잘 유지하는 편이에요. 상황에 따라 민감하게 반응하거나 여유롭게 대처할 수 있어요. 이런 균형 잡힌 성격은 여러 상황에서 큰 도움이 돼요.</p>';
     } else {
         analysis += '<p>💪 당신은 대부분의 환경에 잘 적응하고 스트레스를 덜 받는 편이에요. 이런 안정적인 성격은 여러 상황에서 강점이 될 수 있어요. 하지만 가끔은 주변 사람의 감정이나 작은 상황 변화에 조금 더 신경 써보세요.</p>';
@@ -316,17 +223,12 @@ function generateOverallAnalysis(scores) {
 // DOMContentLoaded 이벤트 리스너 수정
 document.addEventListener('DOMContentLoaded', function () {
     const startBtn = document.getElementById('start-btn');
-    if (!startBtn) {
-        console.error("Start button not found.");
-    } else {
-        console.log("Start button successfully found:", startBtn);
+    if (startBtn) {
         startBtn.addEventListener('click', function () {
-            console.log("Start button clicked");
             showSection('test-container');
             createQuestion();
         });
+    } else {
+        console.error("Start button not found. Please check the HTML structure.");
     }
 });
-
-
-
