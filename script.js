@@ -302,3 +302,4 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("Start button not found. Please check the HTML structure.");
     }
 });
+
