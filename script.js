@@ -85,7 +85,7 @@ function showResult() {
         data: {
             labels: ['감각적 민감성', '정서적 반응성', '인지적 처리 깊이'],
             datasets: [{
-                label: 'HSP 점수',
+                label: '점수',
                 data: [scores.sensory_sensitivity, scores.emotional_reactivity, scores.cognitive_depth],
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
