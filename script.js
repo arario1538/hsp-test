@@ -52,10 +52,14 @@ function showSection(id) {
 
 
 function createQuestion() {
-    console.log("Creating question:", currentQuestion, questions[currentQuestion]);
+    console.log("Creating question for index:", currentQuestion);
     const testContainer = document.getElementById('test-container');
     if (!testContainer) {
         console.error("Test container not found.");
+        return;
+    }
+    if (!questions[currentQuestion]) {
+        console.error(`Question at index ${currentQuestion} does not exist.`);
         return;
     }
     testContainer.innerHTML = `
@@ -71,16 +75,16 @@ function createQuestion() {
         </div>
         <button id="next-btn">${currentQuestion === questions.length - 1 ? '결과 보기' : '다음'}</button>
     `;
-    console.log("Test container updated");
-
+    console.log("Question rendered in container.");
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) {
         nextBtn.onclick = nextQuestion;
-        console.log("Next button initialized");
+        console.log("Next button initialized.");
     } else {
         console.error("Next button not found.");
     }
 }
+
 
 
 function nextQuestion() {
