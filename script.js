@@ -292,9 +292,13 @@ function generateOverallAnalysis(scores) {
 
 // DOMContentLoaded 이벤트 리스너 수정
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("DOM fully loaded and parsed");
     const startBtn = document.getElementById('start-btn');
+    console.log("Start button:", startBtn);
+
     if (startBtn) {
         startBtn.addEventListener('click', function () {
+            console.log("Start button clicked");
             showSection('test-container');
             createQuestion();
         });
@@ -302,4 +306,5 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("Start button not found. Please check the HTML structure.");
     }
 });
+
 
