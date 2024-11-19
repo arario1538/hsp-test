@@ -12,7 +12,7 @@ const questions = [
     { text: "중요한 일을 준비할 때 계획대로 되지 않으면 불안감을 느낀다.", category: "emotional_reactivity" },
     { text: "여러 가지 일을 한꺼번에 처리하면 스트레스를 크게 받는다.", category: "cognitive_depth" },
     { text: "주변 사람이 힘들어 보일 때 자연스럽게 도움을 주고 싶어진다.", category: "emotional_reactivity" },
-    { text: "폭력적이거나 자극적인 영상은 의도적으로 피하려고 한다.", category: "emotional_reactivity" },
+    { text: "중요한 결정을 내릴 때 여러 가능성을 깊이 고민하고 신중하게 선택한다.", category: "cognitive_depth" },
     { text: "업무나 발표 중 누군가가 평가하고 있다는 생각이 들면 긴장한다.", category: "emotional_reactivity" },
     { text: "조용한 환경에서 더 잘 집중할 수 있다.", category: "sensory_sensitivity" },
     { text: "가족이나 친구와의 만남 후에는 혼자만의 시간이 필요하다.", category: "emotional_reactivity" },
@@ -106,7 +106,7 @@ function showResult() {
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 32, // 최대 점수 설정
+                    max: 36, // 최대 점수 설정
                     title: {
                         display: true,
                         text: '점수'
@@ -150,8 +150,8 @@ function generateAnalysis(scores) {
     let analysis = '<h3>분석 결과</h3>';
     
     // 각 영역별 분석
-    analysis += generateCategoryAnalysis('감각적 민감성', scores.sensory_sensitivity, 32);
-    analysis += generateCategoryAnalysis('정서적 반응성', scores.emotional_reactivity, 32);
+    analysis += generateCategoryAnalysis('감각적 민감성', scores.sensory_sensitivity, 36);
+    analysis += generateCategoryAnalysis('정서적 반응성', scores.emotional_reactivity, 28);
     analysis += generateCategoryAnalysis('인지적 처리 깊이', scores.cognitive_depth, 16);
 
     // 종합 분석 추가
