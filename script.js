@@ -4,23 +4,25 @@ const questions = [
     { text: "주변 사람들의 표정이나 말투 변화에 민감하게 반응한다.", category: "sensory_sensitivity" },
     { text: "대중교통이나 복잡한 환경의 소음에 쉽게 피로감을 느낀다.", category: "sensory_sensitivity" },
     { text: "네온사인, 전광판처럼 강한 빛에 노출되면 눈이 금방 피로해진다", category: "sensory_sensitivity" },
-    { text: "예의 없는 행동을 보면 쉽게 불편함을 느낀다.", category: "emotional_reactivity" },
     { text: "배달 음식을 주문할 때 포장 상태나 재료의 신선도를 민감하게 따진다.", category: "sensory_sensitivity" },
-    { text: "갑작스러운 전화나 메시지에 긴장하거나 불편함을 느낄 때가 있다.", category: "emotional_reactivity" },
     { text: "카페나 공공장소에서 주변이 시끄러우면 집중하기 힘들다.", category: "sensory_sensitivity" },
-    { text: "사람이 많은 명절이나 회식 자리에서는 쉽게 지친다.", category: "emotional_reactivity" },
-    { text: "중요한 일을 준비할 때 계획대로 되지 않으면 불안감을 느낀다.", category: "emotional_reactivity" },
-    { text: "여러 가지 일을 한꺼번에 처리하면 스트레스를 크게 받는다.", category: "cognitive_depth" },
-    { text: "주변 사람이 힘들어 보일 때 자연스럽게 도움을 주고 싶어진다.", category: "emotional_reactivity" },
-    { text: "폭력적이거나 자극적인 영상은 의도적으로 피하려고 한다.", category: "emotional_reactivity" },
-    { text: "업무나 발표 중 누군가가 평가하고 있다는 생각이 들면 긴장한다.", category: "emotional_reactivity" },
     { text: "조용한 환경에서 더 잘 집중할 수 있다.", category: "sensory_sensitivity" },
-    { text: "가족이나 친구와의 만남 후에는 혼자만의 시간이 필요하다.", category: "emotional_reactivity" },
     { text: "복잡한 쇼핑몰이나 사람이 붐비는 장소에서는 금방 피로감을 느낀다.", category: "sensory_sensitivity" },
     { text: "지나치게 매운 음식이나 강한 자극이 부담스럽게 느껴질 때가 있다.", category: "sensory_sensitivity" },
     { text: "날씨가 극단적으로 덥거나 추울 때 쉽게 지친다.", category: "sensory_sensitivity" },
+  
+    { text: "예의 없는 행동을 보면 쉽게 불편함을 느낀다.", category: "emotional_reactivity" },
+    { text: "갑작스러운 전화나 메시지에 긴장하거나 불편함을 느낄 때가 있다.", category: "emotional_reactivity" },
+    { text: "사람이 많은 명절이나 회식 자리에서는 쉽게 지친다.", category: "emotional_reactivity" },
+    { text: "중요한 일을 준비할 때 계획대로 되지 않으면 불안감을 느낀다.", category: "emotional_reactivity" },
+    { text: "주변 사람이 힘들어 보일 때 자연스럽게 도움을 주고 싶어진다.", category: "emotional_reactivity" },
+    { text: "폭력적이거나 자극적인 영상은 의도적으로 피하려고 한다.", category: "emotional_reactivity" },
+    { text: "업무나 발표 중 누군가가 평가하고 있다는 생각이 들면 긴장한다.", category: "emotional_reactivity" },
+
+    { text: "여러 가지 일을 한꺼번에 처리하면 스트레스를 크게 받는다.", category: "cognitive_depth" },
     { text: "실수를 줄이기 위해 항상 꼼꼼하게 확인하려 한다.", category: "cognitive_depth" },
-    { text: "음악을 들으며 깊은 감동을 느끼고, 이를 오래 기억한다.", category: "cognitive_depth" }
+    { text: "음악을 들으며 깊은 감동을 느끼고, 이를 오래 기억한다.", category: "cognitive_depth" },
+    { text: "새로운 아이디어나 문제를 깊이 있게 분석하려는 성향이 있다.", category: "cognitive_depth" }
 ];
 
 questions.sort(() => Math.random() - 0.5);
@@ -43,6 +45,7 @@ function createQuestion() {
                 <label><input type="radio" name="q" value="2"> 약간 그렇다</label>
                 <label><input type="radio" name="q" value="3"> 꽤 그렇다</label>
                 <label><input type="radio" name="q" value="4"> 매우 그렇다</label>
+                <label><input type="radio" name="q" value="5"> 완전히 그렇다</label>
             </div>
         </div>
         <button id="next-btn">${currentQuestion === questions.length - 1 ? '결과 보기' : '다음'}</button>
@@ -59,7 +62,7 @@ function nextQuestion() {
     }
 
     const value = parseInt(selected.value);
-    if (value < 1 || value > 4) {
+    if (value < 1 || value > 5) {
         alert('잘못된 값이 선택되었습니다. 다시 선택해주세요.');
         return;
     }
@@ -85,7 +88,7 @@ function showResult() {
         data: {
             labels: ['감각적 민감성', '정서적 반응성', '인지적 처리 깊이'],
             datasets: [{
-                label: 'High Sensitivity Personal 점수',
+                label: 'HSP 점수',
                 data: [scores.sensory_sensitivity, scores.emotional_reactivity, scores.cognitive_depth],
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -106,7 +109,7 @@ function showResult() {
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 32, // 최대 점수 설정
+                    max: 45, // 최대 점수 설정
                     title: {
                         display: true,
                         text: '점수'
